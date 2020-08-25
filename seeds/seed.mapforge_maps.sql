@@ -22,13 +22,13 @@ VALUES (
 		'test D',
 		'tttttttttttttttttttttbtttwbbtbwwbbt',
 		5,
-		2
+		3
 	),
 	(
 		'test E',
 		'ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttbttttttttttttttttttttttttbbbtttttttttttttttttttttbbbwwbttttttttttttttbbttbbbbwwbbtttttttttttttbbbbbbbwwwbbtttttbbtbbbbbbbwwbbwwwbbbttbbbbbbbbbbbbbbwwwwwbbbbttbbbbbwwbwwwwwwwwbbbbbbtttbwwwwbwwwwbbbbbbbbbbbttttttbbbwwwbbbbbbbbbbtttttttttttbbbbbbbbttttttttttttttttttttbbbtttttttttttttttttttt',
 		26,
-		1
+		3
 	)
 ;
 COMMIT;
