@@ -16,34 +16,42 @@ const serializeMap = (map) => ({
     user_id: map.user_id,
 });
 
-mapRouter.post("/", jsonBodyParser, ({ body, app, url }, res, next) => {
-    const user_id = AuthService.verifyJwt(body.token)["user_id"];
-    const { map_name, map_string, width } = body;
-    const newMap = {
-        map_name,
-        map_string,
-        width,
-        user_id,
-    };
+mapRouter.post(
+    "/",
+    jsonBodyParser,
+    ({ headers, body, app, url }, res, next) => {
+        const user_id = AuthService.verifyJwt(
+            headers.authorization.split("Bearer ")[1]
+        )["user_id"];
+        const { map_name, map_string, width } = body;
+        const newMap = {
+            map_name,
+            map_string,
+            width,
+            user_id,
+        };
 
-	console.log(newMap)
+        console.log(newMap);
 
-    MapService.addMap(app.get("db"), newMap)
-    	.then((mapData) => {
-    		logger.info(`Map id ${mapData.id} created.`)
-    		res.status(201)
-    			.location(`/maps/${mapData.id}`)
-    			.json(serializeMap(mapData))
-    	})
-    	.catch(next)
-});
+        MapService.addMap(app.get("db"), newMap)
+            .then((mapData) => {
+                logger.info(`Map id ${mapData.id} created.`);
+                res.status(201)
+                    .location(`/maps/${mapData.id}`)
+                    .json(serializeMap(mapData));
+            })
+            .catch(next);
+    }
+);
 
 mapRouter.get(jsonBodyParser, (req, res, next) => {
-    let user = AuthService.verifyJwt(req.url.split("/")[1])["user_id"];
+    // console.log("url", req.headers.authorization.split('Bearer ')[1]);
+    let user = AuthService.verifyJwt(
+        req.headers.authorization.split("Bearer ")[1]
+    )["user_id"];
 
     MapService.getUserNicknameAndMaps(req.app.get("db"), user)
         .then((arr) => {
-            console.log(arr);
             let nickname = arr[0][0].nickname;
             let maps = arr[1];
             res.json({ nickname, maps });
