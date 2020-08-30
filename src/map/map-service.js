@@ -20,6 +20,29 @@ const mapService = {
                 return rows[0];
             });
     },
+    updateMap(db, id, mapData) {
+        const { map_name, map_string, width } = mapData;
+        const date = new Date();
+        return db.raw(
+            `UPDATE maps SET map_name = '${map_name}', map_string = '${map_string}', width = ${width}, date_modified = now() WHERE id = ${id}`
+        );
+    },
+    deleteMap(db, user_id, map_name) {
+        return db("maps")
+            .where({ user_id })
+            .andWhere({ map_name })
+            .del()
+            .then(() => {
+                return map_name;
+            });
+    },
+    upsert(db, user_id, map_name) {
+        return db
+            .select("*")
+            .from("maps")
+            .where({ user_id })
+            .andWhere({ map_name });
+    },
 };
 
 module.exports = mapService;

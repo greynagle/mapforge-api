@@ -148,15 +148,14 @@ COMMIT;`);
 
     // Map routes
     describe("POST /maps", () => {
-        it("should return success if all information supplied", () => {
+        it("should return success if all information supplied to an 'ADD' test", () => {
             const token = jwt.sign({ user_id: 3 }, config.JWT_SECRET, {
                 subject: "naglegrey",
                 algorithm: "HS256",
             });
-            console.log(token);
             return supertest(app)
                 .post("/api/maps")
-                .set({ "Authorization": `Bearer ${token}` })
+                .set({ Authorization: `Bearer ${token}` })
                 .send({
                     map_name: "testMap",
                     map_string: "bbbbbtttttwwwwwbbbbbbbbbb",
@@ -164,7 +163,24 @@ COMMIT;`);
                     user_id: 1,
                 })
                 .expect(201);
-        });
+        }),
+            it("should return success if all information supplied to an 'UPDATE' test", () => {
+                const token = jwt.sign({ user_id: 3 }, config.JWT_SECRET, {
+                    subject: "naglegrey",
+                    algorithm: "HS256",
+                });
+                return supertest(app)
+                    .post("/api/maps")
+                    .set({ Authorization: `Bearer ${token}` })
+                    .send({
+                        map_name: "test E",
+                        map_string:
+                            "ttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttttbttttttttttttttttttttttttbbbtttttttttttttttttttttbbbwwbttttttttttttttbbttbbbbwwbbtttttttttttttbbbbbbbwwwbbtttttbbtbbbbbbbwwbbwwwbbbttbbbbbbbbbbbbbbwwwwwbbbbttbbbbbwwbwwwwwwwwbbbbbbtttbwwwwbwwwwbbbbbbbbbbbttttttbbbwwwbbbbbbbbbbtttttttttttbbbbbbbbttttttttttttttttttttbbbtttttttttttttttttttt",
+                        width: 13,
+                        user_id: 3,
+                    })
+                    .expect(201);
+            });
     });
 
     describe("GET /maps", () => {
@@ -176,7 +192,7 @@ COMMIT;`);
             // console.log(token);
             return supertest(app)
                 .get("/api/maps")
-                .set({ "Authorization": `Bearer ${token}` })
+                .set({ Authorization: `Bearer ${token}` })
                 .send({
                     map_name: "testMap",
                     map_string: "bbbbbtttttwwwwwbbbbbbbbbb",
