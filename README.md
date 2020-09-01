@@ -4,6 +4,10 @@ Live link: https://mapforge-7962ukihf.vercel.app/
 
 Client repo: https://github.com/greynagle/mapforge
 
+Sample login
+Username: naglegrey
+Password: Passw0rd!
+
 Structure:
 ```.
 ├── /api
@@ -13,6 +17,10 @@ Structure:
 │   └── POST
 │       ├── /auth/
 │       ├── /users/
+│       └── /maps/
+│   └── UPDATE
+│       └── /maps/
+│   └── DELETE
 │       └── /maps/
 ```
 
