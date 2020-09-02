@@ -6,6 +6,7 @@ const helper = require("./test-helpers");
 const { set } = require("../src/app");
 const jwt = require("jsonwebtoken");
 const config = require("../src/config");
+// const { delete } = require("../src/map/map-router");
 
 describe("MapForge Endpoints", function () {
     let db;
@@ -200,6 +201,23 @@ COMMIT;`);
                     user_id: 1,
                 })
                 .expect(200);
+        });
+    });
+
+	describe("DELETE /maps", () => {
+        it("should delete the selected map", () => {
+            let token = jwt.sign({ user_id: 3 }, config.JWT_SECRET, {
+                subject: "naglegrey",
+                algorithm: "HS256",
+            });
+            // console.log(token);
+            return supertest(app)
+                .delete("/api/maps")
+                .set({ Authorization: `Bearer ${token}` })
+                .send({
+                    map_name: "test D",
+                })
+                .expect(201);
         });
     });
 });
